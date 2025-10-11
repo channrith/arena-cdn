@@ -1,5 +1,24 @@
 {
+  "name": "cdn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "rimraf ./dist && node build.js",
+    "deploy": "scp -r ./dist root@152.42.167.40:/var/www/api/dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0"
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "multer": "^2.0.2",
+    "rimraf": "^6.0.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.10",
+    "nodemon": "^3.1.10"
   }
 }

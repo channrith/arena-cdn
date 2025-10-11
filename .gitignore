@@ -3,4 +3,4 @@ package-lock.json
 ecosystem.config.js
 node_modules/
 dist/
-
+build.js

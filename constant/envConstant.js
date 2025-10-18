@@ -1,15 +1,10 @@
 require("dotenv").config();
 
-const {
-  APP_PORT,
-  API_KEY,
-  CDN_BASE_URL,
-} = process.env;
+const { APP_PORT, UPLOAD_PATH } = process.env;
 
 const ENV = {
   APP_PORT: APP_PORT ? parseInt(APP_PORT) : 3003,
-  API_KEY,
-  CDN_BASE_URL,
+  UPLOAD_PATH: UPLOAD_PATH || 'public',
 };
 
 module.exports = { ENV };

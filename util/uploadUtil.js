@@ -3,10 +3,28 @@ const fs = require("fs");
 const multer = require("multer");
 const { ENV } = require("../constant/envConstant");
 
+const getFolderPath = (folder) => {
+  // Return root if no folder provided
+  if (!folder || typeof folder !== "string" || !folder.trim()) {
+    return "/";
+  }
+
+  // Sanitize: remove dangerous patterns
+  const sanitized = folder
+    .trim()
+    .replace(/\.\./g, "") // Prevent directory traversal
+    .replace(/^\/+|\/+$/g, "") // Remove leading/trailing slashes
+    .replace(/\/+/g, "/") // Collapse multiple slashes
+    .replace(/[<>:"|?*]/g, ""); // Remove invalid filename chars
+
+  // Return root if nothing left after sanitization
+  return sanitized ? `/${sanitized}/` : "/";
+};
+
 const dynamicStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     // Dynamic folder based on query parameter
-    const folderName = req.query.folder || "default";
+    const folderName = getFolderPath(req.query.folder);
 
     const uploadPath = path.join(path.resolve(ENV.UPLOAD_PATH), folderName);
 
@@ -40,4 +58,4 @@ const upload = multer({
   },
 });
 
-module.exports = { upload };
+module.exports = { upload, getFolderPath };

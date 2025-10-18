@@ -1,12 +1,11 @@
 const fs = require("fs");
 const path = require("path");
+const { getFolderPath } = require("../../util/uploadUtil");
 
 const singleUploadAction = async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: "No file uploaded" });
   }
-
-  const folderName = req.query.folder + "/";
 
   // Load JSON configuration
   const configPath = path.join(path.resolve("config/values.json"));
@@ -20,7 +19,10 @@ const singleUploadAction = async (req, res) => {
     console.error("Failed to load config file:", error);
   }
 
-  const fileUrl = `${CONFIG_VALUE.CDN_BASE_URL}${folderName}${req.file.filename}`;
+  const fileUrl = `${CONFIG_VALUE.CDN_BASE_URL}${getFolderPath(
+    req.query.folder
+  )}${req.file.filename}`;
+
   res.json({
     success: true,
     filename: req.file.filename,

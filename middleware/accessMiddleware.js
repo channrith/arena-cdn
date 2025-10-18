@@ -16,14 +16,13 @@ const accessMiddleware = async (req, res, next) => {
 
   const token = req.headers.authorization;
   const configService = CONFIG_VALUE[`${token}`];
-  console.log(token, configService);
 
   if (!token || !configService) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
   const serviceCode = req.headers[`${configService.toLowerCase()}`];
-  console.log(serviceCode);
+  console.log(configService.toLowerCase(), req.headers);
   
   if (CONFIG_VALUE.SECRET_KEY[`${configService}`] !== serviceCode) {
     return res.status(401).json({ error: "Unauthorized" });

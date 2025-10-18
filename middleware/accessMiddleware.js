@@ -22,7 +22,6 @@ const accessMiddleware = async (req, res, next) => {
   }
 
   const serviceCode = req.headers[`${configService.toLowerCase()}`];
-  console.log(configService.toLowerCase(), req.headers);
   
   if (CONFIG_VALUE.SECRET_KEY[`${configService}`] !== serviceCode) {
     return res.status(401).json({ error: "Unauthorized" });

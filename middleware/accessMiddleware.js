@@ -3,6 +3,7 @@ const path = require("path");
 
 const accessMiddleware = async (req, res, next) => {
   const configPath = path.join(path.resolve("config/values.json"));
+  
 
   let CONFIG_VALUE = {};
 
@@ -15,12 +16,15 @@ const accessMiddleware = async (req, res, next) => {
 
   const token = req.headers.authorization;
   const configService = CONFIG_VALUE[`${token}`];
+  log(token, configService);
 
   if (!token || !configService) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
   const serviceCode = req.headers[`${configService.toLowerCase()}`];
+  console.log(serviceCode);
+  
   if (CONFIG_VALUE.SECRET_KEY[`${configService}`] !== serviceCode) {
     return res.status(401).json({ error: "Unauthorized" });
   }

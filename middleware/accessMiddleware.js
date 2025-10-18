@@ -16,7 +16,7 @@ const accessMiddleware = async (req, res, next) => {
 
   const token = req.headers.authorization;
   const configService = CONFIG_VALUE[`${token}`];
-  log(token, configService);
+  console.log(token, configService);
 
   if (!token || !configService) {
     return res.status(401).json({ error: "Unauthorized" });

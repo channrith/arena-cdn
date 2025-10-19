@@ -19,13 +19,15 @@ const singleUploadAction = async (req, res) => {
     console.error("Failed to load config file:", error);
   }
 
-  const fileUrl = `${CONFIG_VALUE.CDN_BASE_URL}${getFolderPath(
-    req.query.folder
-  )}${req.file.filename}`;
+  const folderPath = req.query.folder;
+  const fileUrl = `${CONFIG_VALUE.CDN_BASE_URL}${getFolderPath(folderPath)}${
+    req.file.filename
+  }`;
 
   res.json({
     success: true,
     filename: req.file.filename,
+    filePath: `${folderPath}/${req.file.filename}`,
     url: fileUrl,
   });
 };
